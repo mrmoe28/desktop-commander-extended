@@ -1,0 +1,38 @@
+{
+  "name": "desktop-commander",
+  "version": "1.0.0",
+  "description": "Desktop interaction CLI tool with screenshot and browser automation capabilities",
+  "main": "cli.js",
+  "type": "module",
+  "bin": {
+    "desktop-commander": "./cli.js"
+  },
+  "scripts": {
+    "start": "node cli.js",
+    "dev": "node --watch cli.js",
+    "mcp-server": "node index.js",
+    "postinstall": "node scripts/fix-sharp.js",
+    "fix-sharp": "node scripts/fix-sharp.js"
+  },
+  "keywords": [
+    "cli",
+    "desktop",
+    "screenshot",
+    "automation",
+    "browser",
+    "puppeteer"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.15.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0",
+    "inquirer": "^9.2.12",
+    "ora": "^8.0.1",
+    "puppeteer": "^23.0.0",
+    "robotjs": "^0.6.0",
+    "screenshot-desktop": "^1.12.7",
+    "sharp": "^0.33.5"
+  }
+}
