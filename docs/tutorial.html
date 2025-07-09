@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop Commander - Getting Started Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #f7fafc;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotate(30deg);
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            font-size: 1.4em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+        }
+        
+        .section h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .intro-card {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            margin: 15px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .code-block::before {
+            content: 'Terminal';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #4a5568;
+            padding: 5px 15px;
+            border-radius: 8px 0 8px 0;
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4a5568;
+            border: none;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background: #667eea;
+        }
+        
+        .step-container {
+            display: flex;
+            align-items: start;
+            margin: 25px 0;
+            gap: 20px;
+        }
+        
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .command-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .command-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .command-table tr:hover {
+            background: #f7fafc;
+        }
+        
+        .command-table code {
+            background: #edf2f7;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Monaco', monospace;
+            color: #4a5568;
+        }
+        
+        .tip-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .tip-box strong {
+            color: #d97706;
+        }
+        
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .accordion {
+            margin: 20px 0;
+        }
+        
+        .accordion-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .accordion-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        
+        .accordion-header:hover {
+            background: #f7fafc;
+        }
+        
+        .accordion-content {
+            padding: 0 20px 20px 20px;
+            display: none;
+        }
+        
+        .accordion-item.active .accordion-content {
+            display: block;
+        }
+        
+        .accordion-item.active .accordion-header {
+            background: #f7fafc;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 16px;
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📸 Desktop Commander</h1>
+        <p>Your friendly guide to desktop automation</p>
+    </div>
+
+    <div class="container">
+        <!-- Introduction -->
+        <div class="section">
+            <h2>🌟 Welcome to Desktop Commander!</h2>
+            <div class="intro-card">
+                <h3>What is Desktop Commander?</h3>
+                <p>Think of it as your personal desktop assistant. It can:</p>
+                <ul style="margin: 15px 0 0 20px;">
+                    <li>📸 Take screenshots instantly</li>
+                    <li>✂️ Capture specific areas of your screen</li>
+                    <li>🌐 Control web browsers automatically</li>
+                    <li>🤖 Work alongside AI assistants</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Quick Start -->
+        <div class="section">
+            <h2>🚀 Quick Start (5 minutes)</h2>
+            
+            <div class="step-container">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Install Desktop Commander</h3>
+                    <p>Choose your preferred method:</p>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🖱️</div>
+                            <h4>Easy Install</h4>
+                            <p>Double-click the Desktop Commander app and click "Install"</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⌨️</div>
+                            <h4>Terminal Install</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                                <code>curl -fsSL https://raw.githubusercontent.com/mrmoe28/desktop-commander-extended/main/install.sh | bash</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-container">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Launch Interactive Mode</h3>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <code>desktop-commander interactive</code>
+                    </div>
+                    <p style="margin-top: 10px;">Or use the shortcut: <code style="background: #edf2f7; padding: 4px 8px; border-radius: 4px;">dc interactive</code></p>
+                </div>
+            </div>
+
+            <div class="step-container">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Try Your First Screenshot!</h3>
+                    <p>Select "Take screenshot" from the menu</p>
+                    <div class="success-box">
+                        <strong>Success!</strong> Your screenshot is saved in the current folder.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="section">
+            <h2>✨ What Can You Do?</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon floating">📸</div>
+                    <h3>Screenshots</h3>
+                    <p>Capture your entire screen or just specific areas</p>
+                    <div class="code-block">
+                        <code>dc screenshot</code>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon floating" style="animation-delay: 0.5s;">✂️</div>
+                    <h3>Area Capture</h3>
+                    <p>Select exactly what you want to capture</p>
+                    <div class="code-block">
+                        <code>dc capture-area -x 0 -y 0 -w 500 -h 300</code>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon floating" style="animation-delay: 1s;">🌐</div>
+                    <h3>Browser Control</h3>
+                    <p>Automate web browsing and capture pages</p>
+                    <div class="code-block">
+                        <code>dc browse https://example.com</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Command Reference -->
+        <div class="section">
+            <h2>📝 Command Reference</h2>
+            
+            <table class="command-table">
+                <tr>
+                    <th>What You Want</th>
+                    <th>Command</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>📸 Full screenshot</td>
+                    <td><code>dc screenshot</code></td>
+                    <td>Saves as screenshot-timestamp.png</td>
+                </tr>
+                <tr>
+                    <td>✂️ Partial screenshot</td>
+                    <td><code>dc capture-area</code></td>
+                    <td>Specify x, y, width, height</td>
+                </tr>
+                <tr>
+                    <td>🌐 Open website</td>
+                    <td><code>dc browse [url]</code></td>
+                    <td>Opens in automated browser</td>
+                </tr>
+                <tr>
+                    <td>📄 Web screenshot</td>
+                    <td><code>dc browser-screenshot</code></td>
+                    <td>Captures full webpage</td>
+                </tr>
+                <tr>
+                    <td>🎯 Interactive mode</td>
+                    <td><code>dc interactive</code></td>
+                    <td>Menu-driven interface</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Tips -->
+        <div class="section">
+            <h2>💡 Pro Tips</h2>
+            
+            <div class="tip-box">
+                <strong>Tip 1:</strong> Create an alias for faster access!
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <code>echo "alias dc='desktop-commander'" >> ~/.zshrc</code>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Tip 2:</strong> Save screenshots with custom names:
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <code>dc screenshot -o my-screenshot.png</code>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Tip 3:</strong> Use headless mode for background automation:
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <code>dc browse https://example.com --headless</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="section">
+            <h2>🔧 Troubleshooting</h2>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>❌ "Command not found" error</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>The installation might not be complete. Try running the installer again:</p>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <code>curl -fsSL https://raw.githubusercontent.com/mrmoe28/desktop-commander-extended/main/install.sh | bash</code>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>❌ Permission denied on macOS</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ol>
+                            <li>Open <strong>System Preferences</strong></li>
+                            <li>Go to <strong>Security & Privacy</strong></li>
+                            <li>Click <strong>Screen Recording</strong></li>
+                            <li>Check the box next to <strong>Terminal</strong></li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>❌ Area capture not working</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>This usually means the Sharp module needs to be fixed for your system:</p>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <code>desktop-commander fix-sharp</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2>🎉 Ready to Get Started?</h2>
+            <p>Join thousands of users automating their desktop tasks!</p>
+            <div style="margin-top: 30px;">
+                <a href="https://github.com/mrmoe28/desktop-commander-extended" class="btn">View on GitHub</a>
+                <a href="#" onclick="startTutorial()" class="btn">Start Tutorial</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.querySelector('code').textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Copied!';
+                button.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.style.background = '#4a5568';
+                }, 2000);
+            });
+        }
+        
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('active');
+            });
+            
+            // Open clicked one if it wasn't active
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+        
+        function startTutorial() {
+            alert('Opening Terminal with Desktop Commander...\n\nIf Terminal doesn\'t open, run this command:\ndesktop-commander interactive');
+            
+            // Try to open terminal (works on some systems)
+            window.location.href = 'x-terminal-emulator:desktop-commander interactive';
+        }
+    </script>
+</body>
+</html>

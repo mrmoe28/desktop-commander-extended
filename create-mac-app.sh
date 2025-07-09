@@ -21,7 +21,7 @@ if command -v desktop-commander &> /dev/null; then
     osascript -e 'tell app "Terminal" to do script "desktop-commander interactive"'
 else
     # Install Desktop Commander
-    osascript -e 'display dialog "Desktop Commander is not installed. Click OK to install it." buttons {"Cancel", "Install"} default button "Install"'
+    osascript -e 'display dialog "Desktop Commander is not installed. Would you like to install it now?" buttons {"Cancel", "Install"} default button "Install"'
     
     if [ $? -eq 0 ]; then
         # Open Terminal and run installation
