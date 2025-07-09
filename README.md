@@ -16,8 +16,23 @@ A powerful command-line tool for desktop automation, screenshot capture, and bro
 
 ## 🚀 Quick Start
 
-### One-Line Installation (Recommended)
+### 📥 Easy Installation Options
 
+#### Option 1: Download Installer (Easiest)
+[![Download Installer](https://img.shields.io/badge/Download-Install%20Script-brightgreen?style=for-the-badge&logo=download)](https://github.com/mrmoe28/desktop-commander-extended/releases/latest/download/install.sh)
+
+1. Click the button above to download `install.sh`
+2. Open Terminal where you downloaded it
+3. Run: `bash install.sh`
+
+#### Option 2: Download Ready-to-Use App
+[![Download App](https://img.shields.io/badge/Download-Desktop%20Commander-blue?style=for-the-badge&logo=download)](https://github.com/mrmoe28/desktop-commander-extended/releases/latest/download/desktop-commander-cli.zip)
+
+1. Click to download the zip file
+2. Extract it
+3. Double-click `install.sh` (Mac/Linux) or `install.bat` (Windows)
+
+#### Option 3: One-Line Installation (Advanced)
 ```bash
 curl -fsSL https://raw.githubusercontent.com/mrmoe28/desktop-commander-extended/main/install.sh | bash
 ```
