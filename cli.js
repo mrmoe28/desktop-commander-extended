@@ -2,6 +2,7 @@
 import { program } from 'commander';
 import puppeteer from 'puppeteer';
 import fs from 'fs/promises';
+import { existsSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import os from 'os';
@@ -134,14 +135,53 @@ class DesktopCommanderCLI {
         await browser.close();
       }
       
-      browser = await puppeteer.launch({
+      // Try to find Chrome/Chromium
+      const executablePaths = [
+        '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        '/Applications/Chromium.app/Contents/MacOS/Chromium',
+        '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
+        '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+      ];
+      
+      let executablePath = null;
+      for (const path of executablePaths) {
+        if (fs.existsSync(path)) {
+          executablePath = path;
+          break;
+        }
+      }
+      
+      const launchOptions = {
         headless: options.headless || false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-      });
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--no-first-run',
+          '--no-zygote',
+          '--single-process',
+          '--disable-gpu'
+        ]
+      };
+      
+      if (executablePath) {
+        launchOptions.executablePath = executablePath;
+        spinner.text = `Using browser: ${executablePath.split('/').pop()}`;
+      }
+      
+      browser = await puppeteer.launch(launchOptions);
       
       page = await browser.newPage();
       await page.setViewport({ width: 1280, height: 800 });
-      await page.goto(options.url, { waitUntil: 'networkidle2' });
+      
+      // Set user agent
+      await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+      
+      await page.goto(options.url, { 
+        waitUntil: 'networkidle2',
+        timeout: 30000 
+      });
       
       spinner.succeed(chalk.green(`Browser opened and navigated to: ${options.url}`));
       
@@ -150,6 +190,10 @@ class DesktopCommanderCLI {
       }
     } catch (error) {
       spinner.fail(chalk.red(`Failed to open browser: ${error.message}`));
+      console.log(chalk.yellow('\nTroubleshooting tips:'));
+      console.log('1. Install Google Chrome from: https://www.google.com/chrome/');
+      console.log('2. Or install Chromium: brew install --cask chromium');
+      console.log('3. Try running without headless mode');
       process.exit(1);
     }
   }

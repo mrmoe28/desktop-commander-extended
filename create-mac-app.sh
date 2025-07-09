@@ -15,17 +15,23 @@ mkdir -p "$APP_DIR/Contents/Resources"
 cat > "$APP_DIR/Contents/MacOS/DesktopCommander" << 'EOF'
 #!/bin/bash
 
-# Check if Desktop Commander is installed
+# Check multiple possible locations for Desktop Commander
 if command -v desktop-commander &> /dev/null; then
-    # Open Terminal with Desktop Commander
+    # Try the command directly
     osascript -e 'tell app "Terminal" to do script "desktop-commander interactive"'
+elif [ -f "/opt/homebrew/lib/node_modules/desktop-commander/cli.js" ]; then
+    # Use Homebrew installation path
+    osascript -e 'tell app "Terminal" to do script "/opt/homebrew/lib/node_modules/desktop-commander/cli.js interactive"'
+elif [ -f "$HOME/.desktop-commander/cli.js" ]; then
+    # Use home directory installation
+    osascript -e 'tell app "Terminal" to do script "$HOME/.desktop-commander/cli.js interactive"'
 else
     # Install Desktop Commander
     osascript -e 'display dialog "Desktop Commander is not installed. Would you like to install it now?" buttons {"Cancel", "Install"} default button "Install"'
     
     if [ $? -eq 0 ]; then
-        # Open Terminal and run installation
-        osascript -e 'tell app "Terminal" to do script "curl -fsSL https://raw.githubusercontent.com/mrmoe28/desktop-commander-extended/main/install.sh | bash && desktop-commander interactive"'
+        # Open Terminal and run installation, then launch with direct path
+        osascript -e 'tell app "Terminal" to do script "curl -fsSL https://raw.githubusercontent.com/mrmoe28/desktop-commander-extended/main/install.sh | bash && sleep 2 && /opt/homebrew/lib/node_modules/desktop-commander/cli.js interactive"'
     fi
 fi
 EOF
