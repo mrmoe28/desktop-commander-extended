@@ -19,7 +19,7 @@ A powerful command-line tool for desktop automation, screenshot capture, and bro
 ### One-Line Installation (Recommended)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/yourusername/desktop-commander/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/mrmoe28/desktop-commander-extended/main/install.sh | bash
 ```
 
 ### Alternative Installation Methods
@@ -31,7 +31,7 @@ npm install -g desktop-commander-cli
 
 #### From Source
 ```bash
-git clone https://github.com/yourusername/desktop-commander.git
+git clone https://github.com/mrmoe28/desktop-commander-extended.git
 cd desktop-commander
 npm install
 npm link
@@ -155,7 +155,7 @@ done
 export PATH="$PATH:$HOME/.desktop-commander"
 
 # Or reinstall
-curl -fsSL https://raw.githubusercontent.com/yourusername/desktop-commander/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/mrmoe28/desktop-commander-extended/main/install.sh | bash
 ```
 
 #### Sharp Module Issues (Area Capture)
@@ -196,8 +196,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 - 📧 Email: support@example.com
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/desktop-commander/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/desktop-commander/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/mrmoe28/desktop-commander-extended/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/mrmoe28/desktop-commander-extended/discussions)
 
 ---
 
