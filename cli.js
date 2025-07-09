@@ -101,7 +101,8 @@ class DesktopCommanderCLI {
       spinner.succeed(chalk.green(`Screenshot saved to: ${result.savedPath}`));
     } catch (error) {
       spinner.fail(chalk.red(`Failed to take screenshot: ${error.message}`));
-      process.exit(1);
+      console.log(chalk.cyan('\nReturning to menu...'));
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
 
@@ -123,7 +124,8 @@ class DesktopCommanderCLI {
       if (error.message.includes('Sharp module')) {
         console.log(chalk.yellow('\n💡 Tip: Run "npm run fix-sharp" to enable area capture functionality.'));
       }
-      process.exit(1);
+      console.log(chalk.cyan('\nReturning to menu...'));
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
 
@@ -194,14 +196,17 @@ class DesktopCommanderCLI {
       console.log('1. Install Google Chrome from: https://www.google.com/chrome/');
       console.log('2. Or install Chromium: brew install --cask chromium');
       console.log('3. Try running without headless mode');
-      process.exit(1);
+      console.log(chalk.cyan('\nReturning to menu...'));
+      // Don't exit, just return to caller
     }
   }
 
   async browserScreenshot(options) {
     if (!page) {
       console.error(chalk.red('No browser page open. Use "browse" command first.'));
-      process.exit(1);
+      console.log(chalk.cyan('\nReturning to menu...'));
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return;
     }
     
     const spinner = ora('Taking browser screenshot...').start();
@@ -221,7 +226,8 @@ class DesktopCommanderCLI {
       spinner.succeed(chalk.green(`Browser screenshot saved to: ${savedPath}`));
     } catch (error) {
       spinner.fail(chalk.red(`Failed to take browser screenshot: ${error.message}`));
-      process.exit(1);
+      console.log(chalk.cyan('\nReturning to menu...'));
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
 
@@ -265,6 +271,10 @@ class DesktopCommanderCLI {
             }
           ]);
           await this.openBrowser({ url, headless });
+          // If browser failed to open, stay in the menu
+          if (!browser || !page) {
+            console.log(chalk.yellow('Browser failed to open, but you can try other options.'));
+          }
           break;
 
         case 'screenshot':
@@ -444,6 +454,10 @@ class DesktopCommanderCLI {
           }
           console.log(chalk.cyan('\nGoodbye!'));
           break;
+          
+        default:
+          console.log(chalk.yellow('Invalid option, please try again.'));
+          break;
       }
     }
     
@@ -460,4 +474,20 @@ process.on('SIGINT', async () => {
     await browser.close();
   }
   process.exit(0);
+});
+
+// Handle uncaught errors gracefully
+process.on('uncaughtException', (error) => {
+  console.error(chalk.red('\n❌ An unexpected error occurred:'), error.message);
+  console.log(chalk.yellow('\n💡 Tip: Try restarting Desktop Commander'));
+  console.log(chalk.cyan('Exiting...'));
+  if (browser) {
+    browser.close().catch(() => {});
+  }
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error(chalk.red('\n❌ Unhandled Promise Rejection:'), reason);
+  console.log(chalk.cyan('Continuing...'));
 });
