@@ -137,10 +137,10 @@ class DesktopCommanderCLI {
         await browser.close();
       }
       
-      // Try to find Chrome/Chromium
+      // Try to find Chrome/Chromium (Chromium first for better compatibility)
       const executablePaths = [
-        '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
         '/Applications/Chromium.app/Contents/MacOS/Chromium',
+        '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
         '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
         '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
       ];
