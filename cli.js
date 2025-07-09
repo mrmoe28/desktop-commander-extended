@@ -2,7 +2,7 @@
 import { program } from 'commander';
 import puppeteer from 'puppeteer';
 import fs from 'fs/promises';
-import { existsSync } from 'fs';
+import fsSync from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import os from 'os';
@@ -147,7 +147,7 @@ class DesktopCommanderCLI {
       
       let executablePath = null;
       for (const path of executablePaths) {
-        if (fs.existsSync(path)) {
+        if (fsSync.existsSync(path)) {
           executablePath = path;
           break;
         }
